@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Repositories.Core;
 
 namespace DomainModel
 {
-    public class ProductStore
+    public class ProductStore : IEntityStore<Product>
     {
-        public List<Product> Products;
+        public List<Product> Entities { get; }
 
         public ProductStore(int numberOfProducts)
         {
-            Products = new List<Product>();
+            Entities = new List<Product>();
             var rand = new Random();
 
             var currentId = 1;
@@ -19,7 +20,7 @@ namespace DomainModel
                 {
                     var newProduct = new Product(currentId, LoremNET.Lorem.Words(1, 4, true), rand.NextDouble() * rand.Next(1, 1000));
 
-                    Products.Add(newProduct);
+                    Entities.Add(newProduct);
 
                     currentId++;
                 });
