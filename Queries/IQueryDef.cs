@@ -5,7 +5,7 @@ namespace Queries
     /// Iplementations should contain all the information the handler would need to execute the query
     /// </summary>
     /// <typeparam name="TResult">Type of result expected when query is executed by an instance of <see cref="IQueryHandler{TQuery, TResult}"/></typeparam>
-    public abstract class Query<TResult>
+    public interface IQueryDef<TResult>
     {
         
     } 

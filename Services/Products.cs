@@ -1,21 +1,19 @@
-﻿using System;
-using System.Linq;
-using DomainModel;
-using Repositories.Core;
+﻿using DomainModel;
+using Repositories;
 
 namespace Services
 {
     public class Products : IProductService
     {
-        private readonly IRepository<Product> _productsRepository;
+        private readonly IProductRepository _productRepository;
 
-        public Products(IRepository<Product> productsRepository)
+        public Products(IProductRepository productRepository)
         {
-            _productsRepository = productsRepository;
+            _productRepository = productRepository;
         }
         public Product[] GetAllProductsPaged(int offset, int pageSize)
         {
-            return _productsRepository.List().Skip(offset).Take(pageSize).ToArray();
+            return _productRepository.GetAllProductsPaged(offset, pageSize);
         }
     }
 }
