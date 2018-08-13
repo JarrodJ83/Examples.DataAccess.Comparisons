@@ -1,8 +1,9 @@
 ﻿using System;
+using Repositories.Core;
 
 namespace DomainModel
 {
-    public class Product
+    public class Product : Entity
     {
         public int Id { get; set; }
         public string Name { get; set; }

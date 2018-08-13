@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DomainModel
 {
-    class ProductStore
+    public class ProductStore
     {
         public List<Product> Products;
 

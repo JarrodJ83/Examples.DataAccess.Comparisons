@@ -8,4 +8,8 @@
     <PackageReference Include="Lorem.NET" Version="1.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Repositories.Core\Repositories.Core.csproj" />
+  </ItemGroup>
+
 </Project>
