@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using DomainModel;
 using Repositories.Core;
 
@@ -13,9 +14,14 @@ namespace Repositories
             _productStore = productStore;
         }
 
-        public Product[] GetAllProductsPaged(int offset, int pageSize)
+        public async Task<Product[]> GetPageOfProductsAsync(int offset, int pageSize)
         {
             return _productStore.Entities.Skip(offset).Take(pageSize).ToArray();
+        }
+
+        public async Task<int> GetAllProductsCount()
+        {
+            return _productStore.Entities.Count;
         }
     }
 }

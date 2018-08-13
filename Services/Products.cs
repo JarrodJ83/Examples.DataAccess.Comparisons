@@ -1,4 +1,5 @@
-﻿using DomainModel;
+﻿using System.Threading.Tasks;
+using DomainModel;
 using Repositories;
 
 namespace Services
@@ -11,9 +12,21 @@ namespace Services
         {
             _productRepository = productRepository;
         }
-        public Product[] GetAllProductsPaged(int offset, int pageSize)
+
+        public async Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize)
         {
-            return _productRepository.GetAllProductsPaged(offset, pageSize);
+            var getPageOfProducts = _productRepository.GetPageOfProductsAsync(offset, pageSize);
+            var getAllProductsCount = _productRepository.GetAllProductsCount();
+
+            Task.WaitAll(getPageOfProducts, getAllProductsCount);
+
+            return new PagedData<Product>
+            {
+                Data = await getPageOfProducts,
+                TotalRecords = await getAllProductsCount,
+                PageSize = pageSize,
+                Offset = offset
+            };
         }
     }
 }

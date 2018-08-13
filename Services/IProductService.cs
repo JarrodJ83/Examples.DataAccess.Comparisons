@@ -1,9 +1,10 @@
-﻿using DomainModel;
+﻿using System.Threading.Tasks;
+using DomainModel;
 
 namespace Services
 {
     public interface IProductService
     {
-        Product[] GetAllProductsPaged(int offset, int pageSize);
+        Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize);
     }
 }
