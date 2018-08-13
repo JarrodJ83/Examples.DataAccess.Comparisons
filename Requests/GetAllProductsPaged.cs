@@ -2,7 +2,7 @@
 
 namespace Requests
 {
-    public class GetAllProductsPaged : PagedRequest<Product[]>
+    public class GetAllProductsPaged : PagedRequest<PagedData<Product>>
     {
     }
 }
