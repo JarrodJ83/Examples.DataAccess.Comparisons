@@ -12,6 +12,7 @@ using Repositories;
 using Repositories.Core;
 using Requests;
 using Services;
+using Services.Core;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;

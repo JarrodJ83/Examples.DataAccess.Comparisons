@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
-    <ProjectReference Include="..\Repositories\Repositories.csproj" />
-    <ProjectReference Include="..\Services.Core\Services.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
 
-namespace Services
+namespace Services.Core
 {
     public interface IProductService
     {

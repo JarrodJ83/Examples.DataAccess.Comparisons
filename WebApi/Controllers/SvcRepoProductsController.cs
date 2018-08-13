@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
-using Services;
+using Services.Core;
 
 namespace WebApi.Controllers
 {
