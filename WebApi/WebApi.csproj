@@ -15,7 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\Queries\Queries.csproj" />
+    <ProjectReference Include="..\QueryHandlers\QueryHandlers.csproj" />
+    <ProjectReference Include="..\RequestHandlers\RequestHandlers.csproj" />
+    <ProjectReference Include="..\Requests\Requests.csproj" />
   </ItemGroup>
 
 </Project>
