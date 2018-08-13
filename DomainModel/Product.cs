@@ -1,5 +1,4 @@
-﻿using System;
-using Repositories.Core;
+﻿using Repositories.Core;
 
 namespace DomainModel
 {

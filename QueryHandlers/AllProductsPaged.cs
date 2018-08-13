@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DomainModel;
@@ -10,7 +7,7 @@ using Repositories.Core;
 
 namespace QueryHandlers
 {
-    class AllProductsPaged : IQueryHandler<Queries.AllProductsPaged, Product[]>
+    public class AllProductsPaged : IQueryHandler<Queries.AllProductsPaged, Product[]>
     {
         private readonly IEntityStore<Product> _productStore;
 

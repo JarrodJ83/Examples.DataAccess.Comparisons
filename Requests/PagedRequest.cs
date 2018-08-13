@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Requests
+﻿namespace Requests
 {
     public abstract class PagedRequest<TResponse> : IRequest<TResponse>
     {

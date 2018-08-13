@@ -1,24 +1,22 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
-using Requests;
+using Services;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CqrsProductsController : ControllerBase
+    public class SvcRepoProductsController : ControllerBase
     {
-        private readonly IRequestHandler<Requests.GetAllProductsPaged, PagedData<Product>> _getAllProductsPaged;
+        private readonly IProductService _productsService;
 
-        public CqrsProductsController(
-            IRequestHandler<Requests.GetAllProductsPaged, PagedData<Product>> getAllProductsPaged
-            )
+        public SvcRepoProductsController(IProductService productsService)
         {
-            _getAllProductsPaged = getAllProductsPaged;
+            _productsService = productsService;
         }
 
-        // GET api/CQRSProducts
+        // GET api/SvcRepoProducts
 
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<Product>>> Get()
@@ -35,35 +33,31 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedData<Product>>> Get([FromQuery]int pageSize, [FromQuery]int offset)
         {
-            return await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPaged
-            {
-                Offset = offset,
-                PageSize = pageSize
-            });
+            return await _productsService.GetAllProductsPagedAsync(offset, pageSize);
         }
 
         #endregion
 
-        // GET api/CQRSProducts/5
+        // GET api/SvcRepoProducts/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
         }
 
-        // POST api/CQRSProducts
+        // POST api/SvcRepoProducts
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/CQRSProducts/5
+        // PUT api/SvcRepoProducts/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/CQRSProducts/5
+        // DELETE api/SvcRepoProducts/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

@@ -7,9 +7,9 @@ namespace Repositories
 {
     public class Products : BaseRepository<Product>, IProductRepository
     {
-        private readonly ProductStore _productStore;
+        private readonly IEntityStore<Product> _productStore;
 
-        public Products(ProductStore productStore) : base(productStore)
+        public Products(IEntityStore<Product> productStore) : base(productStore)
         {
             _productStore = productStore;
         }
