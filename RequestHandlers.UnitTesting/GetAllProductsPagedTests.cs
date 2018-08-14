@@ -16,7 +16,7 @@ namespace RequestHandlers.UnitTesting
     {
         private GetAllProductsPaged _getAllProductsPaged;
         private Mock<IQueryHandler<AllProductsPagedQry, Product[]>> _qryAllProductsPaged;
-        private Mock<IQueryHandler<Queries.ProductsCountQry, int>> _qryProductsCount;
+        private Mock<IQueryHandler<ProductsCountQry, int>> _qryProductsCount;
         private Product[] products;
 
         [SetUp]
@@ -27,29 +27,59 @@ namespace RequestHandlers.UnitTesting
 
             products = new Fixture().CreateMany<Product>(20).ToArray();
 
-            _qryProductsCount.Setup(handler =>
-                    handler.FetchAsync(It.IsAny<Queries.ProductsCountQry>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(products.Length));
+            _getAllProductsPaged = new GetAllProductsPaged(_qryAllProductsPaged.Object, _qryProductsCount.Object);
+        }
 
+        void SetPageSize(int pageSize)
+        {
             _qryAllProductsPaged.Setup(handler =>
                     handler.FetchAsync(It.IsAny<AllProductsPagedQry>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(products));
+                .Returns(Task.FromResult(products.Take(pageSize).ToArray()));
+        }
 
-            _getAllProductsPaged = new GetAllProductsPaged(_qryAllProductsPaged.Object, _qryProductsCount.Object);
+        void SetTotalRecords(int totalRecords)
+        {
+            _qryProductsCount.Setup(handler =>
+                    handler.FetchAsync(It.IsAny<ProductsCountQry>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(totalRecords));
         }
 
         [Test]
         public async Task Returns_All_Data_In_One_Page()
         {
+            var pageSize = products.Length + 1;
+            
+            SetPageSize(pageSize);
+            SetTotalRecords(pageSize);
+
             var pagedData = await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest
             {
-                PageSize = products.Length + 1, // fetch all the data in one page
+                PageSize = pageSize, // fetch all the data in one page
                 Offset = 0
             });
 
             pagedData.ShouldNotBeNull();
             pagedData.TotalRecords.ShouldBe(products.Length);
             pagedData.Data.Length.ShouldBe(products.Length);
+        }
+
+        [Test]
+        public async Task Returns_One_Page_of_Overall_Data()
+        {
+            var pageSize = products.Length / 2;
+
+            SetPageSize(pageSize);
+            SetTotalRecords(products.Length);
+
+            var pagedData = await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest
+            {
+                PageSize = pageSize, // fetch all the data in one page
+                Offset = 0
+            });
+
+            pagedData.ShouldNotBeNull();
+            pagedData.TotalRecords.ShouldBe(products.Length);
+            pagedData.Data.Length.ShouldBe(pageSize);
         }
     }
 }
