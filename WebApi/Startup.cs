@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using DomainModel;
+﻿using DomainModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +9,10 @@ using Queries;
 using Repositories;
 using Repositories.Core;
 using Requests;
-using Services;
 using Services.Core;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
-using Products = Repositories.Products;
 
 namespace WebApi
 {
@@ -33,7 +29,6 @@ namespace WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -49,7 +44,6 @@ namespace WebApi
             services.UseSimpleInjectorAspNetRequestScoping(_container);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             _container.RegisterMvcControllers(app);
@@ -67,7 +61,7 @@ namespace WebApi
         private void RegisterServicesAndRepos(Container container)
         {
             container.Register(typeof(IRepository<>), new[] { typeof(Repositories.IProductRepository).Assembly }, Lifestyle.Scoped);
-            container.Register<IProductRepository, Products>(Lifestyle.Scoped);
+            container.Register<IProductRepository, Repositories.Products>(Lifestyle.Scoped);
             container.Register<IProductService, Services.Products>(Lifestyle.Scoped);
         }
 

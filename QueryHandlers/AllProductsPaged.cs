@@ -7,7 +7,7 @@ using Repositories.Core;
 
 namespace QueryHandlers
 {
-    public class AllProductsPaged : IQueryHandler<Queries.AllProductsPaged, Product[]>
+    public class AllProductsPaged : IQueryHandler<Queries.AllProductsPagedQry, Product[]>
     {
         private readonly IEntityStore<Product> _productStore;
 
@@ -15,7 +15,7 @@ namespace QueryHandlers
         {
             _productStore = productStore;
         }
-        public async Task<Product[]> FetchAsync(Queries.AllProductsPaged query, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Product[]> FetchAsync(Queries.AllProductsPagedQry query, CancellationToken cancellationToken = default(CancellationToken))
         {
             return _productStore.Entities.Skip(query.Offset).Take(query.PageSize).ToArray();
         }

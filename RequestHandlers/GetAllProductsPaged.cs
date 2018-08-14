@@ -6,29 +6,29 @@ using Requests;
 
 namespace RequestHandlers
 {
-    public class GetAllProductsPaged : IRequestHandler<Requests.GetAllProductsPaged, PagedData<Product>>
+    public class GetAllProductsPaged : IRequestHandler<Requests.GetAllProductsPagedRequest, PagedData<Product>>
     {
-        private readonly IQueryHandler<AllProductsPaged, Product[]> _allProductsPaged;
-        private readonly IQueryHandler<ProductsCount, int> _productsCount;
+        private readonly IQueryHandler<AllProductsPagedQry, Product[]> _allProductsPaged;
+        private readonly IQueryHandler<ProductsCountQry, int> _productsCount;
 
         public GetAllProductsPaged(
-            IQueryHandler<Queries.AllProductsPaged, Product[]> allProductsPaged,
-            IQueryHandler<Queries.ProductsCount, int> productsCount
+            IQueryHandler<Queries.AllProductsPagedQry, Product[]> allProductsPaged,
+            IQueryHandler<Queries.ProductsCountQry, int> productsCount
             )
         {
             _allProductsPaged = allProductsPaged;
             _productsCount = productsCount;
         }
 
-        public async Task<PagedData<Product>> HandleAsync(Requests.GetAllProductsPaged request, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<PagedData<Product>> HandleAsync(Requests.GetAllProductsPagedRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var allProductsPaged = _allProductsPaged.FetchAsync(new Queries.AllProductsPaged
+            var allProductsPaged = _allProductsPaged.FetchAsync(new Queries.AllProductsPagedQry
             {
                 Offset = request.Offset,
                 PageSize = request.PageSize
             });
 
-            var productsCount = _productsCount.FetchAsync(new Queries.ProductsCount());
+            var productsCount = _productsCount.FetchAsync(new Queries.ProductsCountQry());
 
             Task.WaitAll(allProductsPaged, productsCount);
 

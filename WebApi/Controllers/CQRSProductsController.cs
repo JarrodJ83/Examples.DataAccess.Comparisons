@@ -9,10 +9,10 @@ namespace WebApi.Controllers
     [ApiController]
     public class CqrsProductsController : ControllerBase
     {
-        private readonly IRequestHandler<Requests.GetAllProductsPaged, PagedData<Product>> _getAllProductsPaged;
+        private readonly IRequestHandler<Requests.GetAllProductsPagedRequest, PagedData<Product>> _getAllProductsPaged;
 
         public CqrsProductsController(
-            IRequestHandler<Requests.GetAllProductsPaged, PagedData<Product>> getAllProductsPaged
+            IRequestHandler<Requests.GetAllProductsPagedRequest, PagedData<Product>> getAllProductsPaged
             )
         {
             _getAllProductsPaged = getAllProductsPaged;
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedData<Product>>> Get([FromQuery]int pageSize, [FromQuery]int offset)
         {
-            return await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPaged
+            return await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest
             {
                 Offset = offset,
                 PageSize = pageSize

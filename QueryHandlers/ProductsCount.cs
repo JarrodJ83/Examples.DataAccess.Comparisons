@@ -6,7 +6,7 @@ using Repositories.Core;
 
 namespace QueryHandlers
 {
-    class ProductsCount : IQueryHandler<Queries.ProductsCount, int>
+    class ProductsCount : IQueryHandler<Queries.ProductsCountQry, int>
     {
         private readonly IEntityStore<Product> _productStore;
 
@@ -14,7 +14,7 @@ namespace QueryHandlers
         {
             _productStore = productStore;
         }
-        public async Task<int> FetchAsync(Queries.ProductsCount query, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<int> FetchAsync(Queries.ProductsCountQry query, CancellationToken cancellationToken = default(CancellationToken))
         {
             return _productStore.Entities.Count;
         }
