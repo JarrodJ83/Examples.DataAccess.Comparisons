@@ -19,6 +19,8 @@ namespace RequestHandlers.UnitTesting
         private Mock<IQueryHandler<ProductsCountQry, int>> _qryProductsCount;
         private Product[] products;
 
+        #region Setup
+
         [SetUp]
         public void Setup()
         {
@@ -29,7 +31,7 @@ namespace RequestHandlers.UnitTesting
 
             _getAllProductsPaged = new GetAllProductsPaged(_qryAllProductsPaged.Object, _qryProductsCount.Object);
         }
-
+        
         void SetPageSize(int pageSize)
         {
             _qryAllProductsPaged.Setup(handler =>
@@ -43,6 +45,8 @@ namespace RequestHandlers.UnitTesting
                     handler.FetchAsync(It.IsAny<ProductsCountQry>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(totalRecords));
         }
+
+        #endregion
 
         [Test]
         public async Task Returns_All_Data_In_One_Page()
