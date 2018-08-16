@@ -25,5 +25,19 @@ namespace DomainModel
                     currentId++;
                 });
         }
+
+        private static ProductStore _current;
+        public static ProductStore Current
+        {
+            get
+            {
+                //throw new Exception("Database unaccessible!");
+
+                if (_current == null)
+                    _current = new ProductStore(1000);
+
+                return _current;
+            }
+        }
     }
 }

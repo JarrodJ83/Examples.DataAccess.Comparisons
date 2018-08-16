@@ -5,11 +5,11 @@ using Repositories.Core;
 
 namespace Repositories
 {
-    public class Products : BaseRepository<Product>, IProductRepository
+    public class ProductRespository
     {
-        private readonly IEntityStore<Product> _productStore;
+        private readonly ProductStore _productStore;
 
-        public Products(IEntityStore<Product> productStore) : base(productStore)
+        public ProductRespository(ProductStore productStore)
         {
             _productStore = productStore;
         }
@@ -19,7 +19,7 @@ namespace Repositories
             return _productStore.Entities.Skip(offset).Take(pageSize).ToArray();
         }
 
-        public async Task<int> GetAllProductsCount()
+        public async Task<int> GetAllProductsCountAsync()
         {
             return _productStore.Entities.Count;
         }

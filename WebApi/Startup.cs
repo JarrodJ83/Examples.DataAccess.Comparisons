@@ -9,6 +9,7 @@ using Queries;
 using Repositories;
 using Repositories.Core;
 using Requests;
+using Services;
 using Services.Core;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
@@ -60,9 +61,9 @@ namespace WebApi
 
         private void RegisterServicesAndRepos(Container container)
         {
-            container.Register(typeof(IRepository<>), new[] { typeof(Repositories.IProductRepository).Assembly }, Lifestyle.Scoped);
-            container.Register<IProductRepository, Repositories.Products>(Lifestyle.Scoped);
-            container.Register<IProductService, Services.Products>(Lifestyle.Scoped);
+            //    container.Register(typeof(IRepository<>), new[] { typeof(ProductRespository).Assembly }, Lifestyle.Scoped);
+            //    container.Register<IProductRepository, ProductRespository>(Lifestyle.Scoped);
+            //    container.Register<IProductService, ProductService>(Lifestyle.Scoped);
         }
 
         private void RegisterCQRSDependencies(Container container)

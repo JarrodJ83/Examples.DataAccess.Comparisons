@@ -5,19 +5,14 @@ using Services.Core;
 
 namespace Services
 {
-    public class Products : IProductService
+    public class ProductService
     {
-        private readonly IProductRepository _productRepository;
-
-        public Products(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
-
         public async Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize)
         {
-            var getPageOfProducts = _productRepository.GetPageOfProductsAsync(offset, pageSize);
-            var getAllProductsCount = _productRepository.GetAllProductsCount();
+            ProductRespository productRepository = new ProductRespository(ProductStore.Current);
+
+            var getPageOfProducts = productRepository.GetPageOfProductsAsync(offset, pageSize);
+            var getAllProductsCount = productRepository.GetAllProductsCountAsync();
 
             Task.WaitAll(getPageOfProducts, getAllProductsCount);
 
