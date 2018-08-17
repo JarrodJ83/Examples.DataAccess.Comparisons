@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
 using Repositories;
-using Services.Core;
 
 namespace Services
 {
@@ -11,10 +10,8 @@ namespace Services
         {
             ProductRespository productRepository = new ProductRespository(ProductStore.Current);
 
-            var getPageOfProducts = productRepository.GetPageOfProductsAsync(offset, pageSize);
-            var getAllProductsCount = productRepository.GetAllProductsCountAsync();
-
-            Task.WaitAll(getPageOfProducts, getAllProductsCount);
+            Task<Product[]> getPageOfProducts = productRepository.GetPageOfProductsAsync(offset, pageSize);
+            Task<int> getAllProductsCount = productRepository.GetAllProductsCountAsync();
 
             return new PagedData<Product>
             {
@@ -23,6 +20,13 @@ namespace Services
                 PageSize = pageSize,
                 Offset = offset
             };
+        }
+
+        public async Task<Product> GetProductAsync(int productId)
+        {
+            ProductRespository productRepository = new ProductRespository(ProductStore.Current);
+
+            return await productRepository.GetByIdAsync(productId);
         }
     }
 }

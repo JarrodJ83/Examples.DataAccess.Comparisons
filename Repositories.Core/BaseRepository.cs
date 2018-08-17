@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repositories.Core
 {
@@ -13,32 +14,32 @@ namespace Repositories.Core
             _entityStore = entityStore;
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
             return _entityStore.Entities.SingleOrDefault(product => product.Id == id);
         }
 
-        public IEnumerable<TEntity> List()
+        public async Task<IEnumerable<TEntity>> ListAsync()
         {
             return _entityStore.Entities;
         }
 
-        public IEnumerable<TEntity> List(Func<TEntity, bool> predicate)
+        public async Task<IEnumerable<TEntity>> ListAsync(Func<TEntity, bool> predicate)
         {
             return _entityStore.Entities.Where(predicate);
         }
 
-        public void Add(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
             _entityStore.Entities.Add(entity);
         }
 
-        public void Delete(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             _entityStore.Entities.Remove(entity);
         }
 
-        public void Edit(TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
             var productToUpdate = _entityStore.Entities.SingleOrDefault(product => product.Id == entity.Id);
 

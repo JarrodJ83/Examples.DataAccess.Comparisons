@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Repositories.Core
 {
     public interface IRepository<TEntity> where TEntity : Entity
     {
-        TEntity GetById(int id);
-        IEnumerable<TEntity> List();
-        IEnumerable<TEntity> List(Func<TEntity, bool> predicate);
-        void Add(TEntity entity);
-        void Delete(TEntity entity);
-        void Edit(TEntity entity);
+        Task<TEntity> GetByIdAsync(int id);
+        Task<IEnumerable<TEntity>> ListAsync();
+        Task<IEnumerable<TEntity>> ListAsync(Func<TEntity, bool> predicate);
+        Task AddAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
     }
 }

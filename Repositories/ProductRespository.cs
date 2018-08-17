@@ -5,18 +5,18 @@ using Repositories.Core;
 
 namespace Repositories
 {
-    public class ProductRespository
+    public class ProductRespository : BaseRepository<Product>
     {
         private readonly ProductStore _productStore;
 
-        public ProductRespository(ProductStore productStore)
+        public ProductRespository(ProductStore productStore) : base(productStore)
         {
             _productStore = productStore;
         }
 
         public async Task<Product[]> GetPageOfProductsAsync(int offset, int pageSize)
         {
-            return _productStore.Entities.Skip(offset).Take(pageSize).ToArray();
+            return (await this.ListAsync()).Skip(offset).Take(pageSize).ToArray();
         }
 
         public async Task<int> GetAllProductsCountAsync()

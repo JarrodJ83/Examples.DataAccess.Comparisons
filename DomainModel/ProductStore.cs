@@ -18,7 +18,7 @@ namespace DomainModel
             Enumerable.Range(0, numberOfProducts).ToList()
                 .ForEach(id =>
                 {
-                    var newProduct = new Product(currentId, LoremNET.Lorem.Words(1, 4, true), rand.NextDouble() * rand.Next(1, 1000));
+                    var newProduct = new Product(currentId, LoremNET.Lorem.Words(1, 4, true), Math.Round(rand.NextDouble() * rand.Next(1, 1000), 2));
 
                     Entities.Add(newProduct);
 
