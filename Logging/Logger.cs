@@ -10,11 +10,11 @@ namespace Logging
         void Exception(Exception ex, string message);
     }
 
-    public class ConsoleLogger : ILogger
+    public class Logger : ILogger
     {
         private readonly Serilog.ILogger _serilog;
 
-        public ConsoleLogger(Serilog.ILogger serilog)
+        public Logger(Serilog.ILogger serilog)
         {
             _serilog = serilog;
         }

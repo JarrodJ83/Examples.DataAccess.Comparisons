@@ -21,8 +21,6 @@ namespace Services
             Task<Product[]> getPageOfProducts = _productRepository.GetPageOfProductsAsync(offset, pageSize);
             Task<int> getAllProductsCount = _productRepository.GetAllProductsCountAsync();
 
-            Task.WaitAll(getAllProductsCount, getPageOfProducts);
-
             return new PagedData<Product>
             {
                 Data = await getPageOfProducts,
@@ -34,9 +32,7 @@ namespace Services
 
         public async Task<Product> GetProductAsync(int productId)
         {
-            ProductRespository productRepository = new ProductRespository(ProductStore.Current);
-
-            return await productRepository.GetByIdAsync(productId);
+            return await _productRepository.GetByIdAsync(productId);
         }
     }
 }

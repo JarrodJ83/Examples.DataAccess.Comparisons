@@ -43,7 +43,7 @@ namespace WebApi
             RegisterServicesAndRepos(_container);
             RegisterCQRSDependencies(_container);
             
-            _container.Register<ILogger, ConsoleLogger>(Lifestyle.Scoped);
+            _container.Register<ILogger, Logger>(Lifestyle.Scoped);
             _container.Register<Serilog.ILogger>(CreateSerilog, Lifestyle.Scoped);
 
             services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_container));
