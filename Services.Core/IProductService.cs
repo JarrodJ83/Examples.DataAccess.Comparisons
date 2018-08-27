@@ -6,5 +6,6 @@ namespace Services.Core
     public interface IProductService
     {
         Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize);
+        Task<Product> GetProductAsync(int productId);
     }
 }

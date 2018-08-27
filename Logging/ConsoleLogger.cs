@@ -4,14 +4,20 @@ using System.Net.Http;
 
 namespace Logging
 {
-    public static class ConsoleLogger
+    public interface ILogger
     {
-        public static async void Verbose(string message)
+        void Verbose(string message);
+        void Exception(Exception ex, string message);
+    }
+
+    public class ConsoleLogger : ILogger
+    {
+        public void Verbose(string message)
         {
             Console.WriteLine($"[VRB]: {message}");
         }
 
-        public static async void Exception(Exception ex, string message)
+        public void Exception(Exception ex, string message)
         {
             Console.WriteLine($"[VRB]: {message}\n{ex}");
         }
