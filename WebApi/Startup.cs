@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,14 @@ using Queries;
 using Repositories;
 using Repositories.Core;
 using Requests;
+using Serilog;
+using Serilog.Events;
 using Services;
 using Services.Core;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
+using ILogger = Logging.ILogger;
 
 namespace WebApi
 {
@@ -38,11 +42,22 @@ namespace WebApi
 
             RegisterServicesAndRepos(_container);
             RegisterCQRSDependencies(_container);
+            
+            _container.Register<ILogger, ConsoleLogger>(Lifestyle.Scoped);
+            _container.Register<Serilog.ILogger>(CreateSerilog, Lifestyle.Scoped);
 
             services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_container));
             
             services.EnableSimpleInjectorCrossWiring(_container);
             services.UseSimpleInjectorAspNetRequestScoping(_container);
+        }
+
+        Serilog.ILogger CreateSerilog()
+        {
+            return new LoggerConfiguration()
+                .WriteTo.Console()
+                .MinimumLevel.Verbose()
+                .CreateLogger();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -61,9 +76,11 @@ namespace WebApi
 
         private void RegisterServicesAndRepos(Container container)
         {
-            //    container.Register(typeof(IRepository<>), new[] { typeof(ProductRespository).Assembly }, Lifestyle.Scoped);
-            //    container.Register<IProductRepository, ProductRespository>(Lifestyle.Scoped);
-            //    container.Register<IProductService, ProductService>(Lifestyle.Scoped);
+            container.Register(typeof(IRepository<>), new[] { typeof(ProductRespository).Assembly }, Lifestyle.Scoped);
+            container.Register<IProductRepository, ProductRespository>(Lifestyle.Scoped);
+            container.Register<IProductService, ProductService>(Lifestyle.Scoped);
+
+            container.RegisterDecorator<IProductService, LoggedProductService>(Lifestyle.Scoped);
         }
 
         private void RegisterCQRSDependencies(Container container)
@@ -72,6 +89,7 @@ namespace WebApi
             container.Register(typeof(IRequestHandler<,>), new[] { typeof(RequestHandlers.GetAllProductsPaged).Assembly }, Lifestyle.Scoped);
             //container.Register(typeof(ICommandHandler<>), assemblies, Lifestyle.Scoped);
             container.Register(typeof(IQueryHandler<,>), new[] { typeof(QueryHandlers.AllProductsPaged).Assembly }, Lifestyle.Scoped);
+            container.RegisterInstance(ProductStore.Current);
             
             container.Register<IEntityStore<Product>>(() => new ProductStore(100), Lifestyle.Singleton);
 

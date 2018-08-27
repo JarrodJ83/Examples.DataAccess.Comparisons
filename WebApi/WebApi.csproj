@@ -11,6 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Lorem.NET" Version="1.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="serilog" Version="2.7.1" />
+    <PackageReference Include="serilog.sinks.console" Version="3.1.1" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc" Version="4.3.1" />
   </ItemGroup>
 

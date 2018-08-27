@@ -14,9 +14,9 @@ namespace WebApi.Controllers
     {
         private readonly IProductService _productsService;
 
-        public SvcRepoProductsController()
+        public SvcRepoProductsController(IProductService productsService)
         {
-            _productsService = new LoggedProductService(new ConsoleLogger(), new ProductService(new ProductRespository(ProductStore.Current)));
+            _productsService = productsService;
         }
 
         // GET api/SvcRepoProducts

@@ -12,14 +12,20 @@ namespace Logging
 
     public class ConsoleLogger : ILogger
     {
+        private readonly Serilog.ILogger _serilog;
+
+        public ConsoleLogger(Serilog.ILogger serilog)
+        {
+            _serilog = serilog;
+        }
         public void Verbose(string message)
         {
-            Console.WriteLine($"[VRB]: {message}");
+            _serilog.Verbose(message);
         }
 
         public void Exception(Exception ex, string message)
         {
-            Console.WriteLine($"[VRB]: {message}\n{ex}");
+            _serilog.Error(ex, message);
         }
     }
 }

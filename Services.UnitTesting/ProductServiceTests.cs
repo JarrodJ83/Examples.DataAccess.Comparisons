@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoFixture.NUnit3;
 using DomainModel;
 using Moq;
@@ -11,7 +9,7 @@ using Shouldly;
 namespace Services.UnitTesting
 {
     [TestFixture]
-    public class ProductServiceTests
+    public class ProductService_GetPageOfProductsAsyncTests
     {
         private ProductService _productService;
         private Mock<IProductRepository> _productRepository;
