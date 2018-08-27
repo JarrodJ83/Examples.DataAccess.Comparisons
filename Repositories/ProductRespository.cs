@@ -5,7 +5,7 @@ using Repositories.Core;
 
 namespace Repositories
 {
-    public class ProductRespository : BaseRepository<Product>
+    public class ProductRespository : BaseRepository<Product>, IProductRepository
     {
         private readonly ProductStore _productStore;
 

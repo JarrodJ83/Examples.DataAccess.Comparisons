@@ -8,16 +8,23 @@ namespace Services
 {
     public class ProductService
     {
+        private readonly IProductRepository _productRepository;
+
+        public ProductService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+         
         public async Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize)
         {
             try
             {
                 ConsoleLogger.Verbose("Getting products paged");
 
-                ProductRespository productRepository = new ProductRespository(ProductStore.Current);
+                Task<Product[]> getPageOfProducts = _productRepository.GetPageOfProductsAsync(offset, pageSize);
+                Task<int> getAllProductsCount = _productRepository.GetAllProductsCountAsync();
 
-                Task<Product[]> getPageOfProducts = productRepository.GetPageOfProductsAsync(offset, pageSize);
-                Task<int> getAllProductsCount = productRepository.GetAllProductsCountAsync();
+                Task.WaitAll(getAllProductsCount, getPageOfProducts);
 
                 return new PagedData<Product>
                 {

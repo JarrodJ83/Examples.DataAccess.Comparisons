@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
+using Repositories;
 using Services;
 using Services.Core;
 
@@ -14,7 +15,7 @@ namespace WebApi.Controllers
 
         public SvcRepoProductsController()
         {
-            _productsService = new ProductService();
+            _productsService = new ProductService(new ProductRespository(ProductStore.Current));
         }
 
         // GET api/SvcRepoProducts
@@ -41,9 +42,9 @@ namespace WebApi.Controllers
 
         // GET api/SvcRepoProducts/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<ActionResult<Product>> Get(int id)
         {
-            return "value";
+            return await _productsService.GetProductAsync(id);
         }
 
         // POST api/SvcRepoProducts
