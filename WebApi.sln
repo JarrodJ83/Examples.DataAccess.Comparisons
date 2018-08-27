@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Core", "Services.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestHandlers.UnitTesting", "RequestHandlers.UnitTesting\RequestHandlers.UnitTesting.csproj", "{81E1C91C-BEA6-4BCE-8519-071AEA8CC1AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.UnitTesting", "Services.UnitTesting\Services.UnitTesting.csproj", "{5D871685-4114-4BAB-AB97-FB517A211C50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.UnitTesting", "Services.UnitTesting\Services.UnitTesting.csproj", "{5D871685-4114-4BAB-AB97-FB517A211C50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{4F659C9F-E4C2-4EEA-9394-922D5B1B283B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,10 @@ Global
 		{5D871685-4114-4BAB-AB97-FB517A211C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D871685-4114-4BAB-AB97-FB517A211C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D871685-4114-4BAB-AB97-FB517A211C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F659C9F-E4C2-4EEA-9394-922D5B1B283B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F659C9F-E4C2-4EEA-9394-922D5B1B283B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F659C9F-E4C2-4EEA-9394-922D5B1B283B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F659C9F-E4C2-4EEA-9394-922D5B1B283B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
