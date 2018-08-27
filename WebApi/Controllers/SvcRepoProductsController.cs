@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DomainModel;
+using Logging;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using Services;
@@ -11,11 +12,11 @@ namespace WebApi.Controllers
     [ApiController]
     public class SvcRepoProductsController : ControllerBase
     {
-        private readonly ProductService _productsService;
+        private readonly IProductService _productsService;
 
         public SvcRepoProductsController()
         {
-            _productsService = new ProductService(new ProductRespository(ProductStore.Current));
+            _productsService = new LoggedProductService(new ConsoleLogger(), new ProductService(new ProductRespository(ProductStore.Current)));
         }
 
         // GET api/SvcRepoProducts
