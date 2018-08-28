@@ -60,7 +60,7 @@ namespace Services
             }
         }
 
-        // TODO: LSP Violation
+        // TODO: LSP Violation (ProductRepository doesn't implement GetByIdAsync)
         async Task<T> GetByIdFromRepository<T>(BaseRepository<T> baseRepo, int id) where T: Entity
         {
             return await baseRepo.GetByIdAsync(id);
