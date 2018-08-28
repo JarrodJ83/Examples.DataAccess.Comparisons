@@ -57,5 +57,31 @@ namespace Services.UnitTesting
             pageOfProducts.ShouldNotBeNull();
             pageOfProducts.TotalRecords.ShouldBe(totalRecords);
         }
+
+        [Test]
+        public async Task Exceptions_Logged()
+        {
+            var exceptionLogged = false;
+
+            await Should.ThrowAsync<Exception>(async () => await _productService.GetAllProductsPagedAsync(0, 0));
+
+            // TODO: ISSUE: How to verify excption was logged?
+
+
+            exceptionLogged.ShouldBeTrue();
+        }
+
+        [Test]
+        public async Task Beginning_Verbose_Message_Logged()
+        {
+            var verbosMessageLogged = false;
+            await _productService.GetAllProductsPagedAsync(0, 0);
+
+            
+            // TODO: ISSUE: How to verify verbos message was logged?
+
+
+            verbosMessageLogged.ShouldBeTrue();
+        }
     }
 }
