@@ -23,6 +23,7 @@ namespace Services.UnitTesting
         [Test]
         public async Task Contains_Full_Page_Of_Data()
         {
+            // TODO: ISSUE: This will not run on CI server (hits db)
             PagedData<Product> pageOfProducts = await _productService.GetAllProductsPagedAsync(0, 10);
 
             pageOfProducts.ShouldNotBeNull();
@@ -33,7 +34,7 @@ namespace Services.UnitTesting
         [Test, AutoData]
         public async Task Contains_Partial_Page_Of_Data(Product[] products)
         {
-            // Setup ProductRepository to return products
+            // TODO: ISSUE: Can't control response from ProductRepository.GetPageOfProductsAsync
 
             var pageSize = products.Length * 2;
             PagedData<Product> pageOfProducts = await _productService.GetAllProductsPagedAsync(0, pageSize);
@@ -46,11 +47,11 @@ namespace Services.UnitTesting
         [Test, AutoData]
         public async Task Accurate_Total_Record_Count(Product[] products)
         {
-            // Setup ProductRepository to return products
+            // TODO: ISSUE: Can't control response from ProductRepository.GetPageOfProductsAsync
 
             int totalRecords = 10;
 
-            // Setup ProductRepository to return totalrecords
+            // TODO: ISSUE: Can't control response from ProductRepository.GetAllProductsCountAsync
 
             PagedData<Product> pageOfProducts = await _productService.GetAllProductsPagedAsync(0, 0);
             pageOfProducts.ShouldNotBeNull();
