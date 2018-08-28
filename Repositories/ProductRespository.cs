@@ -22,7 +22,7 @@ namespace Repositories
 
         public async Task<int> GetAllProductsCountAsync()
         {
-            return _productStore.Entities.Count;
+            return (await this.ListAsync()).Count();
         }
 
         public override Task<Product> GetByIdAsync(int id)
