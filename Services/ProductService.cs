@@ -13,13 +13,19 @@ namespace Services
 
         public ProductService()
         {
+            // TODO: DIP Violation (Creating its own concrete instance)
             _productRepository = new ProductRespository(ProductStore.Current);
         }
 
+        // TODO: SRP Violation (logging, validation, and business logic)
         public async Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize)
         {
             try
             {
+                if(pageSize > 100)
+                    throw new Exception("Page size cannot exceed 100");
+
+                // TODO: DIP Violation (Accessing dependency directly via static)
                 ConsoleLogger.Verbose("Getting products paged");
 
                 Task<Product[]> getPageOfProducts = _productRepository.GetPageOfProductsAsync(offset, pageSize);
@@ -33,7 +39,7 @@ namespace Services
                     Offset = offset
                 };
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 ConsoleLogger.Exception(e, "Error getting products paged");
                 throw;
