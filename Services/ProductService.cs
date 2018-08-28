@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DomainModel;
 using Logging;
 using Repositories;
+using Repositories.Core;
 
 namespace Services
 {
@@ -44,14 +45,18 @@ namespace Services
             try
             {
                 ConsoleLogger.Verbose("Getting product");
-
-                return await _productRepository.GetByIdAsync(productId);
+                return await GetByIdFromRepository(_productRepository, productId);
             }
             catch (Exception e)
             {
                 ConsoleLogger.Exception(e, "Error getting product");
                 throw;
             }
+        }
+
+        async Task<T> GetByIdFromRepository<T>(BaseRepository<T> baseRepo, int id) where T: Entity
+        {
+            return await baseRepo.GetByIdAsync(id);
         }
     }
 }

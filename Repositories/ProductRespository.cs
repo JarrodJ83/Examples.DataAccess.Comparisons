@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using DomainModel;
 using Repositories.Core;
@@ -22,6 +23,11 @@ namespace Repositories
         public async Task<int> GetAllProductsCountAsync()
         {
             return _productStore.Entities.Count;
+        }
+
+        public override Task<Product> GetByIdAsync(int id)
+        {
+            throw new NotSupportedException("Products cannot be accessed individually");
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Repositories.Core
             _entityStore = entityStore;
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return _entityStore.Entities.SingleOrDefault(product => product.Id == id);
         }

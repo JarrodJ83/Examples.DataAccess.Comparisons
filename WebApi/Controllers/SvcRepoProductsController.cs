@@ -41,9 +41,9 @@ namespace WebApi.Controllers
 
         // GET api/SvcRepoProducts/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<ActionResult<Product>> Get(int id)
         {
-            return "value";
+            return await _productsService.GetProductAsync(id);
         }
 
         // POST api/SvcRepoProducts
