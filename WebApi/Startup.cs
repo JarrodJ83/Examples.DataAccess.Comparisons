@@ -6,13 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Queries;
 using Repositories;
 using Repositories.Core;
-using RequestHandlers;
-using Requests;
 using Serilog;
-using Serilog.Events;
 using Services;
 using Services.Core;
 using SimpleInjector;
@@ -42,7 +38,6 @@ namespace WebApi
             _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
             RegisterServicesAndRepos(_container);
-            RegisterCQRSDependencies(_container);
             
             _container.Register<ILogger, Logger>(Lifestyle.Scoped);
             _container.Register<Serilog.ILogger>(CreateSerilog, Lifestyle.Scoped);
@@ -82,21 +77,6 @@ namespace WebApi
             container.Register<IProductService, ProductService>(Lifestyle.Scoped);
 
             container.RegisterDecorator<IProductService, LoggedProductService>(Lifestyle.Scoped);
-        }
-
-        private void RegisterCQRSDependencies(Container container)
-        {
-            container.Register(typeof(IRequestHandler<>), new[] { typeof(RequestHandlers.GetAllProductsPaged).Assembly }, Lifestyle.Scoped);
-            container.Register(typeof(IRequestHandler<,>), new[] { typeof(RequestHandlers.GetAllProductsPaged).Assembly }, Lifestyle.Scoped);
-            
-            container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(LoggedRequestHandler<,>));
-            
-            //container.Register(typeof(ICommandHandler<>), assemblies, Lifestyle.Scoped);
-            container.Register(typeof(IQueryHandler<,>), new[] { typeof(QueryHandlers.AllProductsPaged).Assembly }, Lifestyle.Scoped);
-            container.RegisterInstance(ProductStore.Current);
-            
-            container.Register<IEntityStore<Product>>(() => new ProductStore(100), Lifestyle.Singleton);
-
         }
     }
 }

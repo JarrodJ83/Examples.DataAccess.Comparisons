@@ -30,9 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj" />
-    <ProjectReference Include="..\QueryHandlers\QueryHandlers.csproj" />
-    <ProjectReference Include="..\RequestHandlers\RequestHandlers.csproj" />
-    <ProjectReference Include="..\Requests\Requests.csproj" />
     <ProjectReference Include="..\Services.Core\Services.Core.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
