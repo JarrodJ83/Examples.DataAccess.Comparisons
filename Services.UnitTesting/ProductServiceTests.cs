@@ -22,14 +22,17 @@ namespace Services.UnitTesting
             _productService = new ProductService(_productRepository.Object);
         }
 
-        [Test]
-        public async Task Contains_Full_Page_Of_Data()
+        [Test, AutoData]
+        public async Task Contains_Full_Page_Of_Data(Product[] products)
         {
-            PagedData<Product> pageOfProducts = await _productService.GetAllProductsPagedAsync(0, 10);
+            _productRepository.Setup(repo => repo.GetPageOfProductsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(Task.FromResult(products));
+
+            PagedData<Product> pageOfProducts = await _productService.GetAllProductsPagedAsync(0, products.Length);
 
             pageOfProducts.ShouldNotBeNull();
-            pageOfProducts.Data.Length.ShouldBe(10);
-            pageOfProducts.PageSize.ShouldBe(10);
+            pageOfProducts.Data.Length.ShouldBe(products.Length);
+            pageOfProducts.PageSize.ShouldBe(products.Length);
         }
 
         [Test, AutoData]

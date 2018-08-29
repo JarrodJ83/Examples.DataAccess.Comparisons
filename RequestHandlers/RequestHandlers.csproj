@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj" />
     <ProjectReference Include="..\Queries\Queries.csproj" />
     <ProjectReference Include="..\Requests\Requests.csproj" />
   </ItemGroup>

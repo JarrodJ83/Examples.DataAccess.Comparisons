@@ -22,11 +22,8 @@ namespace RequestHandlers
 
         public async Task<PagedData<Product>> HandleAsync(Requests.GetAllProductsPagedRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var allProductsPaged = _allProductsPaged.FetchAsync(new Queries.AllProductsPagedQry
-            {
-                Offset = request.Offset,
-                PageSize = request.PageSize
-            });
+            var allProductsPaged = _allProductsPaged.FetchAsync(
+                new Queries.AllProductsPagedQry(request.Offset, request.PageSize));
 
             var productsCount = _productsCount.FetchAsync(new Queries.ProductsCountQry());
 

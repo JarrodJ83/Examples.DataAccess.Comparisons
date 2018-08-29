@@ -56,11 +56,10 @@ namespace RequestHandlers.UnitTesting
             SetPageSize(pageSize);
             SetTotalRecords(pageSize);
 
-            var pagedData = await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest
-            {
-                PageSize = pageSize, // fetch all the data in one page
-                Offset = 0
-            });
+            var pagedData = await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest(
+                0,
+                pageSize // fetch all the data in one page
+            ));
 
             pagedData.ShouldNotBeNull();
             pagedData.TotalRecords.ShouldBe(products.Length);
@@ -75,11 +74,10 @@ namespace RequestHandlers.UnitTesting
             SetPageSize(pageSize);
             SetTotalRecords(products.Length);
 
-            var pagedData = await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest
-            {
-                PageSize = pageSize, // fetch all the data in one page
-                Offset = 0
-            });
+            var pagedData = await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest(
+                0,
+                pageSize // fetch all the data in one page
+            ));
 
             pagedData.ShouldNotBeNull();
             pagedData.TotalRecords.ShouldBe(products.Length);

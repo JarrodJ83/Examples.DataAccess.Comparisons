@@ -35,11 +35,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedData<Product>>> Get([FromQuery]int pageSize, [FromQuery]int offset)
         {
-            return await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPagedRequest
-            {
-                Offset = offset,
-                PageSize = pageSize
-            });
+            return await _getAllProductsPaged.HandleAsync(
+                new Requests.GetAllProductsPagedRequest(offset, pageSize));
         }
 
         #endregion

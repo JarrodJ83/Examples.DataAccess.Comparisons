@@ -11,5 +11,11 @@
         /// Number of records to take in the sorted query
         /// </summary>
         public int PageSize { get; set; }
+
+        public PagedQuery(int offset, int pageSize)
+        {
+            Offset = offset;
+            PageSize = pageSize;
+        }
     }
 }
