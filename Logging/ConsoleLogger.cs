@@ -5,12 +5,12 @@ namespace Logging
 {
     public static class ConsoleLogger
     {
-        public static async void Verbose(string message)
+        public static void Verbose(string message)
         {
             Console.WriteLine($"[VRB]: {message}");
         }
 
-        public static async void Exception(Exception ex, string message)
+        public static void Exception(Exception ex, string message)
         {
             Console.WriteLine($"[VRB]: {message}\n{ex}");
         }
