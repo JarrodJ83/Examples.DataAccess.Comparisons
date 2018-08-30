@@ -1,4 +1,7 @@
-﻿using DomainModel;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using DomainModel;
 using Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,10 +76,12 @@ namespace WebApi
         {
             container.Register(typeof(IRequestHandler<>), new[] { typeof(RequestHandlers.GetAllProductsPaged).Assembly }, Lifestyle.Scoped);
             container.Register(typeof(IRequestHandler<,>), new[] { typeof(RequestHandlers.GetAllProductsPaged).Assembly }, Lifestyle.Scoped);
-            
+
+            container.Register(typeof(IRequestValidatorFactory<>), typeof(ContainerRequestValidatorFactory<>));
+            container.RegisterCollection(typeof(IRequestValidator<>), AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.FullName.Contains("Request")));
+            container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(ValidationRequestHandler<,>));
             container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(LoggedRequestHandler<,>));
-            
-            //container.Register(typeof(ICommandHandler<>), assemblies, Lifestyle.Scoped);
+
             container.Register(typeof(IQueryHandler<,>), new[] { typeof(QueryHandlers.AllProductsPaged).Assembly }, Lifestyle.Scoped);
             container.RegisterInstance<IProductStore>(ProductStore.Current);
         }
