@@ -72,10 +72,12 @@ namespace WebApi
 
         private void RegisterServicesAndRepos(Container container)
         {
+            container.RegisterInstance< IEntityStore<Product>>(ProductStore.Current);
             container.Register(typeof(IRepository<>), new[] { typeof(ProductRespository).Assembly }, Lifestyle.Scoped);
             container.Register<IProductRepository, ProductRespository>(Lifestyle.Scoped);
             container.Register<IProductService, ProductService>(Lifestyle.Scoped);
 
+            container.RegisterDecorator<IProductService, ValidatedProductService>(Lifestyle.Scoped);
             container.RegisterDecorator<IProductService, LoggedProductService>(Lifestyle.Scoped);
         }
     }
