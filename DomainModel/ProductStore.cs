@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Repositories.Core;
 
 namespace DomainModel
 {
-    public class ProductStore : IEntityStore<Product>
+    public interface IProductStore
+    {
+        List<Product> Entities { get; }
+    }
+    public class ProductStore : IProductStore
     {
         public List<Product> Entities { get; }
 
@@ -26,8 +29,8 @@ namespace DomainModel
                 });
         }
 
-        private static ProductStore _current;
-        public static ProductStore Current
+        private static IProductStore _current;
+        public static IProductStore Current
         {
             get
             {
