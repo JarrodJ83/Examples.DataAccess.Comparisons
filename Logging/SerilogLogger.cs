@@ -2,17 +2,11 @@
 
 namespace Logging
 {
-    public interface ILogger
-    {
-        void Verbose(string message);
-        void Exception(Exception ex, string message);
-    }
-
-    public class Logger : ILogger
+    public class SerilogLogger : ILogger
     {
         private readonly Serilog.ILogger _serilog;
 
-        public Logger(Serilog.ILogger serilog)
+        public SerilogLogger(Serilog.ILogger serilog)
         {
             _serilog = serilog;
         }
