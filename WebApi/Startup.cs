@@ -24,10 +24,6 @@ namespace WebApi
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            _container.RegisterMvcControllers(app);
-            _container.RegisterMvcViewComponents(app);
-            _container.AutoCrossWireAspNetComponents(app);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
