@@ -7,14 +7,9 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Queries;
-using Repositories;
-using Repositories.Core;
 using RequestHandlers;
 using Requests;
 using Serilog;
-using Serilog.Events;
-using Services;
-using Services.Core;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
@@ -41,7 +36,6 @@ namespace WebApi
 
             _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-            RegisterServicesAndRepos(_container);
             RegisterCQRSDependencies(_container);
             
             _container.Register<ILogger, Logger>(Lifestyle.Scoped);
@@ -74,16 +68,7 @@ namespace WebApi
 
             app.UseMvc();
         }
-
-        private void RegisterServicesAndRepos(Container container)
-        {
-            container.Register(typeof(IRepository<>), new[] { typeof(ProductRespository).Assembly }, Lifestyle.Scoped);
-            container.Register<IProductRepository, ProductRespository>(Lifestyle.Scoped);
-            container.Register<IProductService, ProductService>(Lifestyle.Scoped);
-
-            container.RegisterDecorator<IProductService, LoggedProductService>(Lifestyle.Scoped);
-        }
-
+        
         private void RegisterCQRSDependencies(Container container)
         {
             container.Register(typeof(IRequestHandler<>), new[] { typeof(RequestHandlers.GetAllProductsPaged).Assembly }, Lifestyle.Scoped);
@@ -93,10 +78,7 @@ namespace WebApi
             
             //container.Register(typeof(ICommandHandler<>), assemblies, Lifestyle.Scoped);
             container.Register(typeof(IQueryHandler<,>), new[] { typeof(QueryHandlers.AllProductsPaged).Assembly }, Lifestyle.Scoped);
-            container.RegisterInstance(ProductStore.Current);
-            
-            container.Register<IEntityStore<Product>>(() => new ProductStore(100), Lifestyle.Singleton);
-
+            container.RegisterInstance<IProductStore>(ProductStore.Current);
         }
     }
 }

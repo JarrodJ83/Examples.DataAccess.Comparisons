@@ -2,15 +2,14 @@
 using System.Threading.Tasks;
 using DomainModel;
 using Queries;
-using Repositories.Core;
 
 namespace QueryHandlers
 {
     class ProductsCount : IQueryHandler<Queries.ProductsCountQry, int>
     {
-        private readonly IEntityStore<Product> _productStore;
+        private readonly IProductStore _productStore;
 
-        public ProductsCount(IEntityStore<Product> productStore)
+        public ProductsCount(IProductStore productStore)
         {
             _productStore = productStore;
         }
