@@ -6,16 +6,15 @@ using Repositories;
 
 namespace Services
 {
-    public class ProductService
+    public class ProductService :IProductService
     {
-        private readonly ProductRespository _productRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ILogger _logger;
 
-        public ProductService()
+        public ProductService(IProductRepository productRepository, ILogger logger)
         {
-            #region
-            // TODO: DIP Violation (Creating its own concrete instance)
-            #endregion
-            _productRepository = new ProductRespository(ProductStore.Current);
+            _productRepository = productRepository;
+            _logger = logger;
         }
 
         #region
@@ -25,12 +24,13 @@ namespace Services
         {
             try
             {
-                if(pageSize > 100)
-                    throw new Exception("Page size cannot exceed 100");
+                int maxPageSize = 100;
+                if(pageSize > maxPageSize)
+                    throw new MaxPageSizeExceededException(maxPageSize);
                 #region
                 // TODO: DIP Violation (Accessing dependency directly via static)
                 #endregion
-                ConsoleLogger.Verbose("Getting products paged");
+                _logger.Verbose("Getting products paged");
 
                 Task<Product[]> getPageOfProducts = _productRepository.GetPageOfProductsAsync(offset, pageSize);
                 Task<int> getAllProductsCount = _productRepository.GetAllProductsCountAsync();
@@ -45,7 +45,7 @@ namespace Services
             }
             catch (Exception e) 
             {
-                ConsoleLogger.Exception(e, "Error getting products paged");
+                _logger.Exception(e, "Error getting products paged");
                 throw;
             }
         }
@@ -54,12 +54,12 @@ namespace Services
         {
             try
             {
-                ConsoleLogger.Verbose("Getting product");
+                _logger.Verbose("Getting product");
                 return await GetByIdFromRepository(_productRepository, productId);
             }
             catch (Exception e)
             {
-                ConsoleLogger.Exception(e, "Error getting product");
+                _logger.Exception(e, "Error getting product");
                 throw;
             }
         }
@@ -67,7 +67,7 @@ namespace Services
         #region
         // TODO: LSP Violation (ProductRepository doesn't implement GetByIdAsync)
         #endregion
-        async Task<T> GetByIdFromRepository<T>(BaseRepository<T> baseRepo, int id) where T: Entity
+        async Task<T> GetByIdFromRepository<T>(IRepository<T> baseRepo, int id) where T: Entity
         {
             return await baseRepo.GetByIdAsync(id);
         }

@@ -3,14 +3,14 @@ using System.Net.Http;
 
 namespace Logging
 {
-    public static class ConsoleLogger
+    public class ConsoleLogger : ILogger
     {
-        public static void Verbose(string message)
+        public void Verbose(string message)
         {
             Console.WriteLine($"[VRB]: {message}");
         }
 
-        public static void Exception(Exception ex, string message)
+        public void Exception(Exception ex, string message)
         {
             Console.WriteLine($"[VRB]: {message}\n{ex}");
         }

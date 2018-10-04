@@ -5,11 +5,11 @@ using DomainModel;
 
 namespace Repositories
 {
-    public class ProductRespository : BaseRepository<Product>
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
-        private readonly ProductStore _productStore;
+        private readonly IEntityStore<Product> _productStore;
 
-        public ProductRespository(ProductStore productStore) : base(productStore)
+        public ProductRepository(IEntityStore<Product> productStore) : base(productStore)
         {
             _productStore = productStore;
         }
