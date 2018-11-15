@@ -7,6 +7,7 @@ namespace WebApi
     {
         public static void Main(string[] args)
         {
+            BadEncryption.Encrypt("");
             CreateWebHostBuilder(args).Build().Run();
         }
 

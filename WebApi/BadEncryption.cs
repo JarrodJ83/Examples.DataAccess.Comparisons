@@ -10,11 +10,11 @@ namespace WebApi
 {
     public class BadEncryption
     {
-        private const string EqualSignReplacement = "ESreplacedES";
-        private const string PlusSignReplacement = "PSreplacedPS";
-        private const string AmpReplacement = "ARreplacedAR";
-        private const string EncryptionKey = "#d9HE$^&";
-        private string Encrypt(string stringToEncrypt)
+        private static string EqualSignReplacement = "ESreplacedES";
+        private static string PlusSignReplacement = "PSreplacedPS";
+        private static string AmpReplacement = "ARreplacedAR";
+        private static string EncryptionKey = "#d9HE$^&";
+        public static string Encrypt(string stringToEncrypt)
         {
 
             byte[] bytes1 = Encoding.UTF8.GetBytes(EncryptionKey);
