@@ -2,7 +2,6 @@
 using DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using Services.Core;
 
 namespace WebApi.Controllers
 {
@@ -16,28 +15,12 @@ namespace WebApi.Controllers
         {
             _productsService = new ProductService();
         }
-
-        // GET api/SvcRepoProducts
-
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Product>>> Get()
-        //{
-        //    return await _getAllProductsPaged.HandleAsync(new Requests.GetAllProductsPaged
-        //    {
-        //        Offset = offset,
-        //        PageSize = pageSize
-        //    });
-        //}
-
-        #region Paged
-
+        
         [HttpGet]
         public async Task<ActionResult<PagedData<Product>>> Get([FromQuery]int pageSize, [FromQuery]int offset)
         {
             return await _productsService.GetAllProductsPagedAsync(offset, pageSize);
         }
-
-        #endregion
 
         // GET api/SvcRepoProducts/5
         [HttpGet("{id}")]

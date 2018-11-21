@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using DomainModel;
 using Logging;
 using Repositories;
-using Repositories.Core;
 
 namespace Services
 {

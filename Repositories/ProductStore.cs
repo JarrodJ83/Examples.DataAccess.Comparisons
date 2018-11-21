@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Repositories.Core;
+using DomainModel;
 
-namespace DomainModel
+namespace Repositories
 {
     public class ProductStore : IEntityStore<Product>
     {

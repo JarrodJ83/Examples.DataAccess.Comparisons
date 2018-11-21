@@ -3,8 +3,10 @@ using DomainModel;
 
 namespace Services.Core
 {
-    public interface IProductService
-    {
-        Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize);
-    }
+    #region HIDDEN
+    //public interface IProductService
+    //{
+    //    Task<PagedData<Product>> GetAllProductsPagedAsync(int offset, int pageSize);
+    //}
+    #endregion
 }

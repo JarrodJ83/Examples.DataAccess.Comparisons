@@ -1,6 +1,4 @@
-﻿using Repositories.Core;
-
-namespace DomainModel
+﻿namespace DomainModel
 {
     public class Product : Entity
     {
